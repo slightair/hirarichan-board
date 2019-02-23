@@ -5,7 +5,7 @@ class Canvas extends Component {
   constructor(props) {
     super(props);
 
-    this.canvas = React.createRef();
+    this.canvas = props.canvasRef || React.createRef();
     this.faceImages = {};
     props.faces.forEach((face) => {
       this.faceImages[face] = React.createRef();
