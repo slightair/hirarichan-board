@@ -27,6 +27,7 @@ class Canvas extends Component {
             families: ['TanukiMagic'],
             urls: ['/fonts.css'],
           },
+          timeout: 30000,
           active() {
             resolve();
           },
