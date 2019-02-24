@@ -6,6 +6,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  IconButton,
   Grid,
   FormControl,
   FormControlLabel,
@@ -16,7 +17,7 @@ import {
 } from '@material-ui/core'
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import {indigo, amber} from '@material-ui/core/colors';
-import CameraIcon from '@material-ui/icons/CameraAlt';
+import {CalendarText as BoardIcon, GithubCircle as GitHubIcon} from 'mdi-material-ui';
 import {CompactPicker} from 'react-color';
 import Canvas from './Canvas'
 
@@ -45,6 +46,9 @@ class App extends Component {
 
     this.canvasRef = React.createRef();
     this.saveImageButtonRef = React.createRef();
+
+    this.projectURL = "https://github.com/slightair/hirarichan-board";
+    this.modelURL = "https://hub.vroid.com/characters/8501027857241540097/models/699851464459839621";
   }
 
   onChangeFace(e) {
@@ -71,10 +75,16 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <AppBar position="static">
           <Toolbar>
-            <CameraIcon className={classes.mainIcon}/>
+            <BoardIcon className={classes.mainIcon}/>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Hirarichan Board
             </Typography>
+            <Button color="inherit" href={this.modelURL} className={classes.modelButton}>
+              VRoid Hub
+            </Button>
+            <IconButton href={this.projectURL}>
+              <GitHubIcon nativeColor="white" />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <div className={classes.main}>
@@ -144,6 +154,9 @@ const theme = createMuiTheme({
 const styles = {
   mainIcon: {
     marginRight: 20,
+  },
+  modelButton: {
+    textTransform: 'none',
   },
   grow: {
     flexGrow: 1,
