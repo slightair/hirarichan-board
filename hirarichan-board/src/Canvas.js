@@ -6,6 +6,7 @@ class Canvas extends Component {
   constructor(props) {
     super(props);
 
+    this.loading = false;
     this.canvas = props.canvasRef || React.createRef();
     this.faceImages = {};
     props.faces.forEach((face) => {
@@ -45,7 +46,9 @@ class Canvas extends Component {
     });
     const loaders = imageLoaders.concat([this.loadFonts()]);
 
+    this.loading = true;
     Promise.all(loaders).then(() => {
+      this.loading = false;
       this.updateCanvas();
     });
   }
@@ -65,6 +68,18 @@ class Canvas extends Component {
     const state = this.props.state;
 
     const stage = new Stage(canvas);
+
+    if (this.loading) {
+      const message = new Text("Loading...", "40px Courier", "black");
+      message.textAlign = 'center';
+      message.textBaseline = 'middle';
+      message.x = this.props.width / 2;
+      message.y = this.props.height / 2;
+      stage.addChild(message);
+      stage.update();
+
+      return;
+    }
 
     const image = new Bitmap(this.faceImages[state.face].current);
     image.scale = this.props.width / image.getBounds().width;
