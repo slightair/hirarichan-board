@@ -14,6 +14,7 @@ import {
   RadioGroup,
   Radio,
   TextField,
+  Link,
 } from '@material-ui/core'
 import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import {indigo, amber} from '@material-ui/core/colors';
@@ -49,6 +50,7 @@ class App extends Component {
 
     this.projectURL = "https://github.com/slightair/hirarichan-board";
     this.modelURL = "https://hub.vroid.com/characters/8501027857241540097/models/699851464459839621";
+    this.tanukiFontURL = "https://tanukifont.com";
   }
 
   onChangeFace(e) {
@@ -83,11 +85,11 @@ class App extends Component {
               VRoid Hub
             </Button>
             <IconButton href={this.projectURL}>
-              <GitHubIcon nativeColor="white" />
+              <GitHubIcon nativeColor="white"/>
             </IconButton>
           </Toolbar>
         </AppBar>
-        <div className={classes.main}>
+        <main className={classes.main}>
           <Grid container justify="center">
             <Grid item className={classes.mainCanvas}>
               <Canvas width={540} height={720} faces={this.faces} state={this.state} canvasRef={this.canvasRef}/>
@@ -135,7 +137,12 @@ class App extends Component {
               </Grid>
             </Grid>
           </Grid>
-        </div>
+        </main>
+        <footer className={classes.footer}>
+          <Typography align="center">
+            フォントに「<Link href={this.tanukiFontURL}>たぬき油性マジック</Link>」を使用しています。
+          </Typography>
+        </footer>
       </MuiThemeProvider>
     );
   }
@@ -176,7 +183,11 @@ const styles = {
   },
   colorPicker: {
     margin: `${theme.spacing.unit * 2}px 0`,
-  }
+  },
+  footer: {
+    marginTop: theme.spacing.unit * 8,
+    padding: `${theme.spacing.unit * 6}px 0`,
+  },
 };
 
 export default withStyles(styles)(App);

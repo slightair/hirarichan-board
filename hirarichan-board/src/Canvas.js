@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Bitmap, Stage, Text} from "@createjs/easeljs";
+import WebFont from "webfontloader"
 
 class Canvas extends Component {
   constructor(props) {
@@ -19,10 +20,29 @@ class Canvas extends Component {
     })
   }
 
+  async loadFonts() {
+    return new Promise((resolve, reject) => {
+        WebFont.load({
+          custom: {
+            families: ['TanukiMagic'],
+            urls: ['/fonts.css'],
+          },
+          active() {
+            resolve();
+          },
+          inactive() {
+            reject("Could not load web fonts");
+          },
+        })
+      }
+    )
+  }
+
   componentDidMount() {
-    const loaders = Object.values(this.faceImages).map((image) => {
+    const imageLoaders = Object.values(this.faceImages).map((image) => {
       return this.loadImage(image.current)
     });
+    const loaders = imageLoaders.concat([this.loadFonts()]);
 
     Promise.all(loaders).then(() => {
       this.updateCanvas();
@@ -50,7 +70,7 @@ class Canvas extends Component {
     stage.addChild(image);
 
     const fontSize = 40;
-    const fontName = "Courier";
+    const fontName = "TanukiMagic";
     const message = new Text(state.message, `${fontSize}px ${fontName}`, state.color);
     message.textAlign = 'center';
     message.textBaseline = 'middle';
