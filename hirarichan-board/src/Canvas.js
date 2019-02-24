@@ -47,6 +47,8 @@ class Canvas extends Component {
     const loaders = imageLoaders.concat([this.loadFonts()]);
 
     this.loading = true;
+    this.updateCanvas();
+
     Promise.all(loaders).then(() => {
       this.loading = false;
       this.updateCanvas();
